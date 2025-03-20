@@ -83,10 +83,11 @@ Cette journée porte sur le front-end du projet. Ton but est d'intégrer le desi
 - [ ] Implémenter le design de la **page d'inscription (signup)**
 - [ ] Vérifier l’**accessibilité** et les **performances** (objectif : **100% Lighthouse**)
 - [ ] Adapter le design pour qu'il soit **responsive** (min-width: **320px**)
-- [ ] Ajoute une nouvelle tâche au clic sur le bouton (+) avec un texte par défaut ("Something to do" par exemple) via _TODO route_
-- [ ] Modifie le texte de la tâche (input onChange) puis appelle automatiquement la route _TODO route_
-- [ ] Supprime la tâche au clic sur le bouton 🗑️ en appelant _TODO route_
-- [ ] Change une tâche de colonne avec les boutons ⬅️ et ➡️. Attention, le bouton gauche n'existe pas sur la colonne "To Do", et le droit n'existe pas sur la colonne "Done".
+- [ ] Ajoute une nouvelle tâche au clic sur le bouton (+) avec un texte par défaut ("Something to do" par exemple) via `POST /boards/{boardId}/tasks`
+- [ ] Récupère les taches du board via `GET /boards/{boardId}/tasks`
+- [ ] Modifie le texte de la tâche (input onChange) puis appelle automatiquement la route `PATCH /boards/{boardId}/tasks/{taskId}`
+- [ ] Supprime la tâche au clic sur le bouton 🗑️ en appelant `DELETE /boards/{boardId}/tasks/{taskId}`
+- [ ] Change une tâche de colonne avec les boutons ⬅️ et ➡️ via la route `PATCH /boards/{boardId}/tasks/{taskId}`. Attention, le bouton gauche n'existe pas sur la colonne "To Do", et le droit n'existe pas sur la colonne "Done".
 
 #### ⭐️ Objectifs bonus
 
@@ -115,3 +116,59 @@ Aujourd'hui on va s'occuper d'intégrer la gestion des utilisateur⋅ice dans le
 
 - [ ] Implémenter une fonction de **recherche "fuzzySearch"** (comme dans VSCode), en **TDD**, et l'utiliser pour filtrer les tâches d'une board
 - [ ] Gérer les **avatars** des utilisateur·ices
+
+
+## 📅 Jour 3 : On passe au backend
+
+Pour le troisième jour, focus sur le back. Jusque là, tu as utilisé des routes d'un backend que nous vous avions fourni. Le but du jeu est d'utiliser le tiens. Alors au travail.
+
+### 🎯 Objectifs du jour
+
+#### ✅ Objectifs principaux
+
+- [ ] Écrire un model conceptuel de donnée pour representer les entités: les utilisateurs, les boards, les taches.
+- [ ] Choisir une stack pour le backend. Prévoir: un ORM, un SGBD et une librairie de serveur HTTP avec un langage de programmation. Suggestion de stack: TypeScript + Express + Prisma.
+- [ ] Mettre en place le schema de base de donnée en suivant l'implémentation suggérée par l'ORM choisi et faire une première migration.
+- [ ] Mettre en place les routes d'authentification. En utilisant un JWT:
+    - [ ] La route de login via `POST /sign-in`
+    - [ ] La route d'inscription `POST /sign-up`
+- [ ] CRUD de l'entité board: 
+    - [ ] implémenter la route `GET /boards`
+    - [ ] implémenter la route `POST /boards`
+    - [ ] implémenter la route `PATCH /boards/{boardId}`
+    - [ ] implémenter la route `DELETE /boards/{boardId}`
+- [ ] CRUD de l'entité task:
+    - [ ] Implémenter la route `GET /boards/{boardId}/task/`
+    - [ ] Implémenter la route `POST /boards/{boardId}/task/`
+    - [ ] Implémenter la route `PATCH /boards/{boardId}/task/{taskId}`
+    - [ ] Implémenter la route `DELETE /boards/{boardId}/task/{taskId}`
+- [ ] Protéger les routes pour faire en sorte d'appliquer la logique des droits de lecture ou d'écriture aux différents boards. Exemple: si un utilisateur sur un board n'a le droit de lecture uniquement, une requête `POST /boards/{boardId}/task/` devrait retourner une 401. De même, un utilisateur qui essaie d'acceder aux taches d'un board sur lequel il n'est pas membre via `GET /boards/{boardIdQuiN'estPasLeMien}` retournera aussi une 401.
+
+#### ⭐️ Objectifs bonus
+
+La journée a été bien remplie. On se garde les bonus pour demain ;)
+
+## 📅 Jour 4 : 
+
+Ajourd'hui on teste et on déploie. Nous n'avions pas opté pour une approche TDD sur les jours précédents pour se concentrer sur le livrable et la prod. Le but de cette journée sera de mettre en place un stratégie de testing, d'évaluer le code coverage de ton projet, de proposer des rapports de tests, d'automatiser un max de trucs de manière à garantir la qualité du code et enfin pouvoir déployer. On va aussi essayer d'automatiser nos déploiements via les Github actions.
+
+Pour les tests, je te recommandes d'utiliser Jest.
+
+### 🎯 Objectifs du jour
+
+
+#### ✅ Objectifs principaux
+
+- [ ] Trouver une manière de mocker la base avec l'ORM et mettre en place de tests unitaires sur les controlleurs.
+- [ ] Mettre en place une DB de test pour développer des tests d'intégration.
+- [ ] Écrire des tests E2E avec un outil comme Supertest
+- [ ] Utilise l'option coverage de la librairie de testing choisie (comme Jest) et constater le taux de coverage.
+- [ ] Créer une pipeline github action qui va éxécuter les tests.
+
+On en a finit avec le testing, on passe au déploiement:
+
+- [ ] Identifie une approche pour déployer tes application, celle du back comme celle du front. Le serveur Ada est à ta disposition.
+
+#### ⭐️ Objectifs bonus
+
+- [ ] Écris un dockerfile pour faciliter le déploiement de ton application.
