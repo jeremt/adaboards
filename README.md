@@ -13,8 +13,6 @@ Nous te proposons une **stack suggérée pour le front** :
 
 > **💡 Remarque :** Tu es libre d'utiliser ou d'ajouter d'autres bibliothèques et frameworks si tu es plus à l'aise avec
 
----
-
 ## 🐙 Utilisation de Git
 
 Une fois ton projet initialisé, crée une branche par jour `day-1`, `day-2`, etc.
@@ -43,30 +41,29 @@ Ton objectif est de réaliser un maximum d'objectifs chaque jour pour développe
 - ✅ **Objectifs requis** : à réaliser en priorité.
 - ⭐️ **Objectifs bonus** : pour aller plus loin, selon ton avancement.
 
-> **ℹ️ Important :** Si certains objectifs requis ne sont pas atteints, **prends le temps d'y revenir** après cette semaine.
+> **ℹ️ Important :** Si certains objectifs requis ne sont pas atteints ce n'est pas grave, mais **prends le temps d'y revenir** après cette semaine.
 
----
+Les encadrant⋅e⋅s seront là pour t'accompagner tout au long du projet. À la fin de chaque journée, tu peux continuer à avancer un peu sur tes objectifs si tu le souhaites.
 
-## ⚙️ Installation initiale
+Au début de chaque nouvelle journée, l'encadrant⋅e du jour prend un moment pour passer en revue ton code et tes objectifs de la veille.
 
-Pour commencer, crée un projet Vite :
-
-```bash
-pnpm create vite # Choisis "react" et "typescript"
-```
-
-Ajoute ensuite les autres dépendances dont tu as besoin pour réaliser le projet (tailwind, react-query, etc.).
-
----
+**Attention, tu dois te concentrer sur tes objectifs du jour en priorité avant de revenir éventuellement sur ceux de la veille**.
 
 ## 📅 Jour 1 : Implémentation du front et utilisation de l'API (sans gestion des utilisateur·ices)
 
-Cette journée porte sur le front-end du projet. Ton but est d'intégrer le design figma (fourni ci-dessous), le plus fidèlement possible. Ensuite, de récupérer certaines données depuis l'API (swagger fourni ci-dessous) pour le moment, sans prendre en compte le système d'utilisateur⋅ice.
+Cette journée porte sur le front-end du projet.
+
+Crée un repository `adaboards`, initialize-le avec le framework front de ton choix (React avec vite par exemple), puis installe toutes les dépendances.
+
+Ton but est d'intégrer le design figma (fourni ci-dessous), le plus fidèlement possible. Ensuite, de récupérer certaines données depuis l'API (swagger et API fournis ci-dessous) pour le moment, sans prendre en compte le système d'utilisateur⋅ice.
+
+> 💡 Tu peux passer le header `X-No-Auth: true` dans les requêtes pour "bypasser" l'authentification avant d'implémenter un vrai système de register et login
 
 ### 📁 Ressources utiles
 
 > - [🎨 Figma](https://www.figma.com/community/file/1483932077241643794) : design à implémenter
-> - [📚 Swagger](TODO) : liste des routes API disponibles
+> - [📚 Swagger](https://github.com/jeremt/adaboards/blob/main/swagger.yml) : liste des routes API disponibles
+> - [🌐 API de test](https://adaboards-api.vercel.app/) : API d'exemple utilisable pour tester le front-end
 
 ### 🎯 Objectifs du jour
 
