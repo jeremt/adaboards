@@ -1,0 +1,302 @@
+openapi: 3.0.0
+info:
+  title: Adaboards
+  description: API de gestion de projet au format kanban.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000/api
+    description: Local development server
+
+tags:
+  - name: Authentication
+    description: Routes d'authentification
+  - name: Users
+    description: Gestion des utilisateurs
+  - name: Boards
+    description: Gestion des boards
+  - name: Tasks
+    description: Gestion des tâches
+
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Crée un compte utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+              required:
+                - email
+                - password
+                - name
+      responses:
+        "201":
+          description: Utilisateur créé
+          content:
+            application/json:
+              example:
+                id: "123"
+                email: "user@example.com"
+                name: "John Doe"
+        "400":
+          description: Erreur de validation
+
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Connecte un utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        "200":
+          description: Connexion réussie
+          content:
+            application/json:
+              example:
+                token: "jwt_token_here"
+                refresh_token: "refresh_token_here"
+        "401":
+          description: Identifiants invalides
+
+  /user/:
+    get:
+      tags:
+        - Users
+      summary: Récupère le profil de l'utilisateur connecté
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Profil utilisateur
+          content:
+            application/json:
+              example:
+                id: "123"
+                email: "user@example.com"
+                name: "John Doe"
+
+  /boards:
+    get:
+      tags:
+        - Boards
+      summary: Récupère tous les boards accessibles par l'utilisateur
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Liste des boards
+          content:
+            application/json:
+              example:
+                - id: "board123"
+                  name: "Projet X"
+                - id: "board456"
+                  name: "Projet Y"
+    post:
+      tags:
+        - Boards
+      summary: Crée un nouveau board
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+      responses:
+        "201":
+          description: Board créé
+          content:
+            application/json:
+              example:
+                id: "board123"
+                name: "Projet X"
+
+  /boards/{boardId}/:
+    delete:
+      tags:
+        - Boards
+      summary: Supprime un board
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Board supprimée
+          content:
+            application/json:
+              example:
+                message: "Board supprimé avec succès"
+
+
+  /boards/{boardId}/tasks:
+    get:
+      tags:
+        - Tasks
+      summary: Récupère les taches d'un board
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Liste des tâches
+          content:
+            application/json:
+              example:
+                - id: "task123"
+                  title: "Ajouter la gestion d'erreur sur la page de connexion"
+                  description: "Création d'une boite de dialogue au dessus du formulaire de connexion cf Figma"
+                  column: "todo"
+                - id: "task124"
+                  title: "Mettre en place un linter check sur les PR"
+                  description: "Ne pas rendre le linter bloquant - un simple warning suffit"
+                  column: "done"
+    post:
+      tags:
+        - Tasks
+      summary: Ajoute une tâche à un board
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                column:
+                  type: string
+              required:
+                - title
+                - column
+      responses:
+        "201":
+          description: Tâche créée
+          content:
+            application/json:
+              example:
+                id: "task123"
+                title: "Faire la maquette"
+                description: "Créer une maquette Figma du projet"
+                column: "doing"
+
+  /boards/{boardId}/tasks/{taskId}:
+    patch:
+      tags:
+        - Tasks
+      summary: Modifie une tâche
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                column:
+                  type: string
+      responses:
+        "200":
+          description: Tâche mise à jour
+          content:
+            application/json:
+              example:
+                message: "Tâche mise à jour"
+    delete:
+      tags:
+        - Tasks
+      summary: Supprime une tâche
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tâche supprimée
+          content:
+            application/json:
+              example:
+                message: "Tâche supprimée avec succès"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
