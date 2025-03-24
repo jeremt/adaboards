@@ -117,8 +117,10 @@ paths:
               example:
                 - id: "board123"
                   name: "Projet X"
+                  updated_at: "2025-03-22T16:45:00Z"
                 - id: "board456"
                   name: "Projet Y"
+                  updated_at: "2025-03-22T16:45:00Z"
     post:
       tags:
         - Boards
