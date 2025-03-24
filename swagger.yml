@@ -5,6 +5,8 @@ info:
   version: 1.0.0
 
 servers:
+  - url: https://adaboards-api.vercel.app/
+    description: Production test server
   - url: http://localhost:3000/api
     description: Local development server
 
