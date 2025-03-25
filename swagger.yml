@@ -167,6 +167,31 @@ paths:
             application/json:
               example:
                 message: "Board supprimé avec succès"
+  
+  /boards/{boardId}/invite:
+    post:
+      tags:
+        - Boards
+      summary: Invite un utilisateur au board via son mail
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mail:
+                  type: string
+                role:
+                  type: string
+              required:
+                - name
+                - role
+      responses:
+        "200":
+          description: Utilistaeur ajouté
 
 
   /boards/{boardId}/tasks:
